@@ -1,12 +1,18 @@
 package me.crashcringle.cringlebosses;
 
+import io.github.thebusybiscuit.slimefun4.api.items.groups.NestedItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.items.groups.SubItemGroup;
+import io.github.thebusybiscuit.slimefun4.api.researches.Research;
+import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
+import me.crashcringle.cringlebosses.chaos.Chaos;
+import me.crashcringle.cringlebosses.prime.Prime;
+import me.crashcringle.cringlebosses.prime.PrimordialBell;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
-import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.api.SlimefunAddon;
@@ -14,7 +20,17 @@ import io.github.thebusybiscuit.slimefun4.libraries.dough.config.Config;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 
 public class CringleBosses extends JavaPlugin implements SlimefunAddon {
+    private NestedItemGroup nestedItemGroup;
+    private ItemGroup chaosItemGroup;
+    private ItemGroup corruptItemGroup;
+    private ItemGroup primeItemGroup;
+    private ItemGroup oldItemGroup;
+    private ItemGroup holyItemGroup;
+    private ItemGroup rogueItemGroup;
 
+    private Research chaosResearch;
+
+    private Research primeResearch;
     @Override
     public void onEnable() {
         // Read something from your config.yml
@@ -24,41 +40,24 @@ public class CringleBosses extends JavaPlugin implements SlimefunAddon {
             // You could start an Auto-Updater for example
         }
 
-        /*
-         * 1. Creating a new Category
-         * This Category will use the following ItemStack
-         */
-        ItemStack itemGroupItem = new CustomItemStack(Material.DIAMOND, "&4Addon Category", "", "&a> Click to open");
+        ItemStack itemGroupItem = new CustomItemStack(Material.SOUL_CAMPFIRE, "&7Bosses", "", "&a> Click to open");
 
-        // Give your Category a unique id.
-        NamespacedKey itemGroupId = new NamespacedKey(this, "addon_category");
-        ItemGroup itemGroup = new ItemGroup(itemGroupId, itemGroupItem);
+        nestedItemGroup = new NestedItemGroup(new NamespacedKey(this, "cringle_bosses"), itemGroupItem);
+        chaosItemGroup = new SubItemGroup(new NamespacedKey(this, "chaos"), nestedItemGroup, new CustomItemStack(Material.REDSTONE, "&4Chaos Realix"));
+        primeItemGroup = new SubItemGroup(new NamespacedKey(this, "primordial"), nestedItemGroup, new CustomItemStack(Material.DIAMOND, "&bPrime Realix"));
+        rogueItemGroup = new SubItemGroup(new NamespacedKey(this, "rogue"), nestedItemGroup, new CustomItemStack(Material.BOW, "&2Rogue Realix"));
+        holyItemGroup = new SubItemGroup(new NamespacedKey(this, "holy"), nestedItemGroup, new CustomItemStack(Material.HONEYCOMB, "&eHoly Realix"));
+        corruptItemGroup = new SubItemGroup(new NamespacedKey(this, "corrupt"), nestedItemGroup, new CustomItemStack(Material.FIRE_CHARGE, "&5Corrupt Realix"));
+        oldItemGroup = new SubItemGroup(new NamespacedKey(this, "old"), nestedItemGroup, new CustomItemStack(Material.TOTEM_OF_UNDYING, "&8Old Realix"));
 
-        /*
-         * 2. Create a new SlimefunItemStack
-         * This class has many constructors, it is very important
-         * that you give each item a unique id.
-         */
-        SlimefunItemStack slimefunItem = new SlimefunItemStack("COOL_DIAMOND", Material.DIAMOND, "&4Cool Diamond", "&c+20% Coolness");
 
-        /*
-         * 3. Creating a Recipe
-         * The Recipe is an ItemStack Array with a length of 9.
-         * It represents a Shaped Recipe in a 3x3 crafting grid.
-         * The machine in which this recipe is crafted in is specified
-         * further down as the RecipeType.
-         */
-        ItemStack[] recipe = { new ItemStack(Material.EMERALD), null, new ItemStack(Material.EMERALD), null, new ItemStack(Material.DIAMOND), null, new ItemStack(Material.EMERALD), null, new ItemStack(Material.EMERALD) };
+        NamespacedKey researchKey = new NamespacedKey(this, "Chaos_bosses_research");
+        chaosResearch = new Research(researchKey, 12600001, "The footholds of chaos", 2);
+        primeResearch = new Research(researchKey, 12600002, "The manuscripts of the primordials", 1);
 
-        /*
-         * 4. Registering the Item
-         * Now you just have to register the item.
-         * RecipeType.ENHANCED_CRAFTING_TABLE refers to the machine in
-         * which this item is crafted in.
-         * Recipe Types from Slimefun itself will automatically add the recipe to that machine.
-         */
-        SlimefunItem item = new SlimefunItem(itemGroup, slimefunItem, RecipeType.ENHANCED_CRAFTING_TABLE, recipe);
-        item.register(this);
+        Chaos.setup(this, chaosItemGroup, chaosResearch);
+        Prime.setup(this, primeItemGroup, primeResearch);
+
     }
 
     @Override
