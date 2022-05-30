@@ -240,7 +240,7 @@ public class SummoningAltarListener implements Listener {
             }
         } else {
             altars.remove(b);
-            Slimefun.getLocalization().sendMessage(p, "machines.Summoning_ALTAR.unknown-recipe", true);
+            Slimefun.getLocalization().sendMessage(p, "machines.ANCIENT_ALTAR.unknown-recipe", true);
 
             for (Block block : pedestals) {
                 altarsInUse.remove(block.getLocation());

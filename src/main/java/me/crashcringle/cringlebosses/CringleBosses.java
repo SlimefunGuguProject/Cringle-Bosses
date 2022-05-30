@@ -5,6 +5,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.groups.SubItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.researches.Research;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import me.crashcringle.cringlebosses.chaos.Chaos;
+import me.crashcringle.cringlebosses.other.Souls;
 import me.crashcringle.cringlebosses.other.SummoningAltar;
 import me.crashcringle.cringlebosses.other.SummoningAltarListener;
 import me.crashcringle.cringlebosses.other.SummoningPedestal;
@@ -29,6 +30,7 @@ public class CringleBosses extends JavaPlugin implements SlimefunAddon {
     private static CringleBosses instance;
 
     private NestedItemGroup nestedItemGroup;
+    private ItemGroup resourcesItemGroup;
     private ItemGroup chaosItemGroup;
     private ItemGroup corruptItemGroup;
     private ItemGroup primeItemGroup;
@@ -39,6 +41,8 @@ public class CringleBosses extends JavaPlugin implements SlimefunAddon {
     private Research chaosResearch;
 
     private Research primeResearch;
+    private Research soulResearch;
+
 
     public static SlimefunItemStack SUMMONING_ALTAR = new SlimefunItemStack("CRINGLE_SUMMONING_ALTAR", Material.ENCHANTING_TABLE,
             "&4Summoning Altar",
@@ -73,6 +77,7 @@ public class CringleBosses extends JavaPlugin implements SlimefunAddon {
         ItemStack itemGroupItem = new CustomItemStack(Material.SOUL_CAMPFIRE, "&7Bosses", "", "&a> Click to open");
 
         nestedItemGroup = new NestedItemGroup(new NamespacedKey(this, "cringle_bosses"), itemGroupItem);
+        resourcesItemGroup = new SubItemGroup(new NamespacedKey(this, "cringle_resources"), nestedItemGroup, new CustomItemStack(Material.TOTEM_OF_UNDYING, "&6Crafting Recipes"));
         chaosItemGroup = new SubItemGroup(new NamespacedKey(this, "chaos"), nestedItemGroup, new CustomItemStack(Material.REDSTONE, "&4Chaos Realix"));
         primeItemGroup = new SubItemGroup(new NamespacedKey(this, "primordial"), nestedItemGroup, new CustomItemStack(Material.DIAMOND, "&bPrime Realix"));
         rogueItemGroup = new SubItemGroup(new NamespacedKey(this, "rogue"), nestedItemGroup, new CustomItemStack(Material.BOW, "&2Rogue Realix"));
@@ -82,8 +87,9 @@ public class CringleBosses extends JavaPlugin implements SlimefunAddon {
 
 
         NamespacedKey researchKey = new NamespacedKey(this, "Chaos_bosses_research");
-        chaosResearch = new Research(researchKey, 12600001, "The footholds of chaos", 2);
-        primeResearch = new Research(researchKey, 12600002, "The manuscripts of the primordials", 1);
+        soulResearch = new Research(researchKey, 12600001, "The souls of reality", 25);
+        chaosResearch = new Research(researchKey, 12600002, "The footholds of chaos", 2);
+        primeResearch = new Research(researchKey, 12600003, "The manuscripts of the primordials", 1);
 
         ItemStack[] altarRecipe = {
                 null,                                       SlimefunItems.ANCIENT_ALTAR,                          null,
@@ -107,7 +113,7 @@ public class CringleBosses extends JavaPlugin implements SlimefunAddon {
 
         Chaos.setup(this, chaosItemGroup, chaosResearch);
         Prime.setup(this, primeItemGroup, primeResearch);
-
+        Souls.setup(this, resourcesItemGroup, soulResearch);
     }
 
     @Override
