@@ -32,6 +32,7 @@ public class Chaos {
         spectre.register(cb);
 
 
+
         chaosResearch.addItems(spectre);
         chaosResearch.register();
 

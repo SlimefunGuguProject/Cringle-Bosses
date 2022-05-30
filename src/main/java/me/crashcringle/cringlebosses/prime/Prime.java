@@ -6,9 +6,12 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.api.researches.Research;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import me.crashcringle.cringlebosses.CringleBosses;
+import me.crashcringle.cringlebosses.other.SummoningAltar;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
+
+import static me.crashcringle.cringlebosses.CringleBosses.SUMMONING_ALTAR;
 
 public class Prime {
 
@@ -34,9 +37,9 @@ public class Prime {
          * further down as the RecipeType.
          */
         ItemStack[] recipe = {
-                new ItemStack(Material.BONE_MEAL),        null,                               new ItemStack(Material.BONE_MEAL),
-                null,                                   SlimefunItems.SIFTED_ORE,    null,
-                new ItemStack(Material.BONE_MEAL),        null,                               new ItemStack(Material.BONE_MEAL) };
+                new ItemStack(Material.BONE_MEAL),        new ItemStack(Material.BONE_MEAL),  new ItemStack(Material.BONE_MEAL),
+                new ItemStack(Material.BONE_MEAL),        SlimefunItems.SIFTED_ORE,    new ItemStack(Material.BONE_MEAL),
+                new ItemStack(Material.BONE_MEAL),        new ItemStack(Material.BONE_MEAL),        new ItemStack(Material.BONE_MEAL) };
 
         /*
          * 4. Registering the Item
@@ -45,7 +48,7 @@ public class Prime {
          * which this item is crafted in.
          * Recipe Types from Slimefun itself will automatically add the recipe to that machine.
          */
-        PrimordialBell bell = new PrimordialBell(ig, primordialBell, RecipeType.ENHANCED_CRAFTING_TABLE, recipe);
+        PrimordialBell bell = new PrimordialBell(ig, primordialBell, SummoningAltar.SUMMONING_ALTAR, recipe);
         bell.register(cb);
 
         primeResearch.addItems(bell);
