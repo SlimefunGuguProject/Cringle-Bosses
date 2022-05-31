@@ -1,7 +1,7 @@
 package me.crashcringle.cringlebosses.other;
 
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
-import me.crashcringle.cringlebosses.CringleBosses;
+import me.crashcringle.cringlebosses.Setup;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.RespawnAnchor;
@@ -15,7 +15,7 @@ import java.util.*;
 
 public class SummoningAltarTask implements Runnable {
     private final SummoningAltarListener listener;
-    private final SummoningPedestal pedestalItem = (SummoningPedestal) CringleBosses.SUMMONING_PEDESTAL.getItem();
+    private final SummoningPedestal pedestalItem = (SummoningPedestal) Setup.SUMMONING_PEDESTAL.getItem();
     private final Block altar;
     private final int stepDelay;
     private final Location dropLocation;

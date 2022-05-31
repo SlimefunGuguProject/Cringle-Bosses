@@ -19,7 +19,9 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Souls {
     public static final RecipeType REALIX_DROP = new RecipeType(new NamespacedKey(CringleBosses.inst(), "realix_drop"), new CustomItemStack(Material.NETHERITE_SWORD, "&bMob Drop", "", "&rKill the specified Mob Type to obtain this Item"));
@@ -71,59 +73,57 @@ public class Souls {
     public Souls() {
     }
     public static void setup(CringleBosses cb, ItemGroup ig, Research soulsResearch) {
-
-        new SlimefunItem(ig, SOUL_OF_MADNESS, REALIX_DROP,
+        List<SlimefunItem> souls = new ArrayList<>();
+        souls.add(new SlimefunItem(ig, SOUL_OF_MADNESS, REALIX_DROP,
                 new ItemStack[] {
                         null, null, null,
                         null, new CustomItemStack(SlimefunUtils.getCustomHead(HeadTexture.CHEESE.getTexture()), "&5Kill Mobs of Chaos"), null,
-                        null, null, null})
-            .register(cb);
+                        null, null, null}));
 
-        new SlimefunItem(ig, CRACKED_SOUL, RecipeType.BARTER_DROP,
+        souls.add(new SlimefunItem(ig, CRACKED_SOUL, RecipeType.BARTER_DROP,
                 new ItemStack[] {
                         null, null, null,
                         new CustomItemStack(SlimefunUtils.getCustomHead(HeadTexture.PIGLIN_HEAD.getTexture()), "Piglin"), null , new CustomItemStack(Material.NETHERITE_SWORD, "&bMob Drop", "", "&cKill Corrupted Mobs"),
-                        null, null, null})
-                .register(cb);
+                        null, null, null}));
 
-        new SlimefunItem(ig, FADING_SOUL, REALIX_DROP,
+        souls.add(new SlimefunItem(ig, FADING_SOUL, REALIX_DROP,
                 new ItemStack[] {
                         null, null, null,
                         null, new CustomItemStack(Material.WITHER_ROSE, "&5Kill Soulless Mobs"), null,
-                        null, null, null})
-                .register(cb);
-        new SlimefunItem(ig, FADED_SOUL, RecipeType.ANCIENT_ALTAR,
+                        null, null, null}));
+        souls.add(new SlimefunItem(ig, FADED_SOUL, RecipeType.ANCIENT_ALTAR,
                 new ItemStack[] {
                         new ItemStack(Material.BONE_MEAL),        null,                               new ItemStack(Material.BONE_MEAL),
                         null,                                     FADING_SOUL,            null,
-                        new ItemStack(Material.BONE_MEAL),        null,                               new ItemStack(Material.BONE_MEAL) })
-                .register(cb);
+                        new ItemStack(Material.BONE_MEAL),        null,                               new ItemStack(Material.BONE_MEAL) }));
 
-        new SlimefunItem(ig, PURIFIED_SOUL, REALIX_DROP,
+        souls.add(new SlimefunItem(ig, PURIFIED_SOUL, REALIX_DROP,
                 new ItemStack[] {
                         null, null, null,
                         null, new CustomItemStack(Material.LILY_OF_THE_VALLEY, "&5Kill Holy Mobs"), null,
-                        null, null, null})
-                .register(cb);
+                        null, null, null}));
 
-        new SlimefunItem(ig, ROYAL_GEL, REALIX_DROP,
+        souls.add(new SlimefunItem(ig, ROYAL_GEL, REALIX_DROP,
                 new ItemStack[] {
                         null, null, null,
                         null, new CustomItemStack(Material.TRIDENT, "&5Kill Primordial Mobs"), null,
-                        null, null, null})
-                .register(cb);
-        new SlimefunItem(ig, HARDENED_GEL, RecipeType.ANCIENT_ALTAR,
+                        null, null, null}));
+        souls.add(new SlimefunItem(ig, HARDENED_GEL, RecipeType.ANCIENT_ALTAR,
                 new ItemStack[] {
                         new ItemStack(Material.BONE_MEAL),        null,                               new ItemStack(Material.BONE_MEAL),
                         null,                                     ROYAL_GEL,            null,
-                        new ItemStack(Material.BONE_MEAL),        null,                               new ItemStack(Material.BONE_MEAL) })
-                .register(cb);
+                        new ItemStack(Material.BONE_MEAL),        null,                               new ItemStack(Material.BONE_MEAL) }));
 
-        new SlimefunItem(ig, GLISTENING_SOUL, RecipeType.ANCIENT_ALTAR,
+        souls.add(new SlimefunItem(ig, GLISTENING_SOUL, RecipeType.ANCIENT_ALTAR,
                 new ItemStack[] {
-                        new ItemStack(Material.BONE_MEAL),        null,                               new ItemStack(Material.BONE_MEAL),
-                        null,                                     CRACKED_SOUL,            null,
-                        new ItemStack(Material.BONE_MEAL),        null,                               new ItemStack(Material.BONE_MEAL) })
-                .register(cb);
+                        SlimefunItems.HEATING_COIL,         SlimefunItems.MAGIC_LUMP_3,                               SlimefunItems.HEATING_COIL,
+                        SlimefunItems.HEATING_COIL,        CRACKED_SOUL,            SlimefunItems.HEATING_COIL,
+                        SlimefunItems.HEATING_COIL,        SlimefunItems.MAGIC_LUMP_3,                               SlimefunItems.HEATING_COIL }));
+
+        for (SlimefunItem soul : souls) {
+            soul.register(cb);
+            soulsResearch.addItems(soul);
+        }
+        soulsResearch.register();
     }
 }

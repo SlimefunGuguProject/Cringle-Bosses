@@ -1,4 +1,4 @@
-package me.crashcringle.cringlebosses.prime;
+package me.crashcringle.cringlebosses.other;
 
 import io.github.thebusybiscuit.slimefun4.api.events.PlayerRightClickEvent;
 import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
@@ -6,9 +6,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.core.attributes.WitherProof;
-import io.github.thebusybiscuit.slimefun4.core.handlers.BlockPlaceHandler;
 import io.github.thebusybiscuit.slimefun4.core.handlers.BlockUseHandler;
-import io.github.thebusybiscuit.slimefun4.core.handlers.ItemUseHandler;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -17,15 +15,20 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wither;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class PrimordialBell extends SlimefunItem implements WitherProof {
+import java.util.List;
 
-    public PrimordialBell(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
+public class Bell extends SlimefunItem implements WitherProof {
+
+    String name;
+    List<PotionEffect> effects;
+    public Bell(String bellName, List<PotionEffect> potionEffects, ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
+        this.name = bellName;
+        this.effects = potionEffects;
     }
 
     @Override
@@ -36,10 +39,9 @@ public class PrimordialBell extends SlimefunItem implements WitherProof {
         //Give the effect to the players in the specified radius
         for (Entity e : location.getWorld().getNearbyEntities(location, 40, 40, 40)) {
             if (e instanceof Player) {
-                ((Player) e).sendMessage("§3The Primordial Bell Rings for thee");
-                ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 60, 2));
-                ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 120, 0));
-                ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 60, 2));
+                String color = name.charAt(0) == '&' ? name.substring(0,2) : "";
+                ((Player) e).sendTitle("&6A Grand Bell tolls", color + "The "+name + color + " Bell Rings for thee", 10, 50, 20);
+                ((LivingEntity) e).addPotionEffects(effects);
                 ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 60, 1));
             }
         }
@@ -63,10 +65,9 @@ public class PrimordialBell extends SlimefunItem implements WitherProof {
         //Give the effect to the players in the specified radius
         for (Entity e : location.getWorld().getNearbyEntities(location, 40, 40, 40)) {
             if (e instanceof Player && e.getEntityId() != event.getPlayer().getEntityId()) {
-              //  ((Player) e).sendMessage("§3The Primordial Bell Rings for thee");
-               // ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 60, 2));
-                ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 120, 0));
-                ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 60, 1));
+                String color = name.charAt(0) == '&' ? name.substring(0,2) : "";
+                ((Player) e).sendTitle("&6A Grand Bell tolls", color + "The "+name + color + " Rings for thee", 10, 50, 20);
+                ((LivingEntity) e).addPotionEffects(effects);
             }
         }
     }

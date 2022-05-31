@@ -8,6 +8,7 @@ import io.github.thebusybiscuit.slimefun4.api.items.settings.IntRangeSetting;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 
 import me.crashcringle.cringlebosses.CringleBosses;
+import me.crashcringle.cringlebosses.Setup;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 
@@ -29,9 +30,9 @@ public class SummoningAltar extends SlimefunItem {
 
     private final ItemSetting<Integer> stepDelay = new IntRangeSetting(this, "step-delay", 0, DEFAULT_STEP_DELAY, Integer.MAX_VALUE);
 
-    public static final RecipeType SUMMONING_ALTAR = new RecipeType(new NamespacedKey(CringleBosses.inst(), "CRINGLE_SUMMONING_ALTAR"), CringleBosses.SUMMONING_ALTAR, (recipe, output) -> {
+    public static final RecipeType SUMMONING_ALTAR = new RecipeType(new NamespacedKey(CringleBosses.inst(), "CRINGLE_SUMMONING_ALTAR"), Setup.SUMMONING_ALTAR, (recipe, output) -> {
         SummoningAltarRecipe altarRecipe = new SummoningAltarRecipe(Arrays.asList(recipe), output);
-        SummoningAltar altar = ((SummoningAltar) CringleBosses.SUMMONING_ALTAR.getItem());
+        SummoningAltar altar = ((SummoningAltar) Setup.SUMMONING_ALTAR.getItem());
         altar.getRecipes().add(altarRecipe);
     });
     @ParametersAreNonnullByDefault

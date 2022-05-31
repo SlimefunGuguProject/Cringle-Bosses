@@ -6,50 +6,44 @@ import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.api.researches.Research;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
 import me.crashcringle.cringlebosses.CringleBosses;
+import me.crashcringle.cringlebosses.other.Bell;
+import me.crashcringle.cringlebosses.other.Souls;
 import me.crashcringle.cringlebosses.other.SummoningAltar;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
-import static me.crashcringle.cringlebosses.CringleBosses.SUMMONING_ALTAR;
+import java.util.Arrays;
+import java.util.List;
+
 
 public class Prime {
 
     public static void setup(CringleBosses cb, ItemGroup ig, Research primeResearch) {
-        /*
-         * 2. Create a new SlimefunItemStack
-         * This class has many constructors, it is very important
-         * that you give each item a unique id.
-         */
+
         SlimefunItemStack primordialBell = new SlimefunItemStack("CRINGLE_PRIMORDIAL_BELL", Material.BELL,
                 "&bPrimordial Bell",
                 "",
-                "&7Disorients and shows nearby players",
+                "&fInvigorates nearby players",
                 "",
-                "&3Requires Hardened Gel to activate");
+                "&7Grand bells do not effect the ringer");
 
-
-        /*
-         * 3. Creating a Recipe
-         * The Recipe is an ItemStack Array with a length of 9.
-         * It represents a Shaped Recipe in a 3x3 crafting grid.
-         * The machine in which this recipe is crafted in is specified
-         * further down as the RecipeType.
-         */
         ItemStack[] recipe = {
-                new ItemStack(Material.BONE_MEAL),        new ItemStack(Material.BONE_MEAL),  new ItemStack(Material.BONE_MEAL),
-                new ItemStack(Material.BONE_MEAL),        SlimefunItems.SIFTED_ORE,    new ItemStack(Material.BONE_MEAL),
-                new ItemStack(Material.BONE_MEAL),        new ItemStack(Material.BONE_MEAL),        new ItemStack(Material.BONE_MEAL) };
+                Souls.HARDENED_GEL,              SlimefunItems.TALISMAN_WARRIOR,       Souls.HARDENED_GEL,
+                Souls.ROYAL_GEL,                 new ItemStack(Material.BELL),        Souls.ROYAL_GEL,
+                Souls.HARDENED_GEL,              SlimefunItems.GOLD_24K,        Souls.HARDENED_GEL};
 
-        /*
-         * 4. Registering the Item
-         * Now you just have to register the item.
-         * RecipeType.ENHANCED_CRAFTING_TABLE refers to the machine in
-         * which this item is crafted in.
-         * Recipe Types from Slimefun itself will automatically add the recipe to that machine.
-         */
-        PrimordialBell bell = new PrimordialBell(ig, primordialBell, SummoningAltar.SUMMONING_ALTAR, recipe);
+        List<PotionEffect> potionEffects = Arrays.asList(
+                new PotionEffect(PotionEffectType.CONDUIT_POWER, 600, 3),
+                new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 600, 2),
+                new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 600, 1)
+        );
+
+        Bell bell = new Bell("&bPrimordial Bell", potionEffects, ig, primordialBell, RecipeType.ANCIENT_ALTAR, recipe);
         bell.register(cb);
+
 
         primeResearch.addItems(bell);
         primeResearch.register();
