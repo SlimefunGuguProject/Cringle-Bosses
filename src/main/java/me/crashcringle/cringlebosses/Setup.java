@@ -25,15 +25,15 @@ import org.bukkit.inventory.ItemStack;
 
 public class Setup {
     public static SlimefunItemStack SUMMONING_ALTAR = new SlimefunItemStack("CRINGLE_SUMMONING_ALTAR", Material.ENCHANTING_TABLE,
-            "&4Summoning Altar",
+            "&4召唤祭坛",
             "",
-            "&cMulti-Block Altar for",
-            "&csummoning various creatures");
+            "&c一种多方块式的祭坛",
+            "&c用于召唤各种Boss");
 
     public static final SlimefunItemStack SUMMONING_PEDESTAL = new SlimefunItemStack("CRINGLE_SUMMONING_PEDESTAL", Material.RESPAWN_ANCHOR,
-            "&4Summoning Pedestal",
+            "&4召唤基座",
             "",
-            "&cPart of the Summoning Altar");
+            "&c召唤祭坛的组成部分");
     
     private NestedItemGroup nestedItemGroup;
     private ItemGroup resourcesItemGroup;
@@ -55,10 +55,10 @@ public class Setup {
 
     public Setup() {
 
-        ItemStack itemGroupItem = new CustomItemStack(Material.SOUL_CAMPFIRE, "&7Bosses", "", "&a> Click to open");
+        ItemStack itemGroupItem = new CustomItemStack(Material.SOUL_CAMPFIRE, "&7混沌Boss", "", "&a> 单击打开");
 
         nestedItemGroup = new NestedItemGroup(new NamespacedKey(CringleBosses.inst(), "cringle_bosses"), itemGroupItem);
-        resourcesItemGroup = new SubItemGroup(new NamespacedKey(CringleBosses.inst(), "cringle_resources"), nestedItemGroup, new CustomItemStack(Material.LANTERN, "&6Crafting Recipes"));
+        resourcesItemGroup = new SubItemGroup(new NamespacedKey(CringleBosses.inst(), "cringle_resources"), nestedItemGroup, new CustomItemStack(Material.LANTERN, "&6合成配方"));
         chaosItemGroup = new SubItemGroup(new NamespacedKey(CringleBosses.inst(), "chaos"), nestedItemGroup, new CustomItemStack(Material.REDSTONE, "&4Chaos Realix"));
         primeItemGroup = new SubItemGroup(new NamespacedKey(CringleBosses.inst(), "primordial"), nestedItemGroup, new CustomItemStack(Material.TRIDENT, "&bPrime Realix"));
         rogueItemGroup = new SubItemGroup(new NamespacedKey(CringleBosses.inst(), "rogue"), nestedItemGroup, new CustomItemStack(Material.WITHER_ROSE, "&2Rogue Realix"));
