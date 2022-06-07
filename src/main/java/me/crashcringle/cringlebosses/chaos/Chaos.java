@@ -43,7 +43,7 @@ public class Chaos {
                 "",
                 "&f迷惑并显示附近玩家",
                 "",
-                "&7但不影响敲钟人本身");
+                "&7不影响敲钟人本身");
 
         ItemStack[] recipe = {
                 Souls.SOUL_OF_MADNESS,              SlimefunItems.TALISMAN_MAGICIAN,        Souls.SOUL_OF_MADNESS,
