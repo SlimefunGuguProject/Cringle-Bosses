@@ -40,7 +40,7 @@ public class Bell extends SlimefunItem implements WitherProof {
         for (Entity e : location.getWorld().getNearbyEntities(location, 40, 40, 40)) {
             if (e instanceof Player) {
                 String color = name.charAt(0) == '&' ? name.substring(0,2) : "";
-                ((Player) e).sendTitle("&6A Grand Bell tolls", color + "The "+name + color + " Bell Rings for thee", 10, 50, 20);
+                ((Player) e).sendTitle("&6大钟为汝敲响了", color + ""+name + color + "", 10, 50, 20);
                 ((LivingEntity) e).addPotionEffects(effects);
                 ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 60, 1));
             }
@@ -60,13 +60,13 @@ public class Bell extends SlimefunItem implements WitherProof {
         Location location = event.getPlayer().getLocation();
         //Play sound at the player's location
         location.getWorld().playSound(location, Sound.ENTITY_ELDER_GUARDIAN_CURSE, SoundCategory.NEUTRAL, 100, (float) 1.5);
-       // event.getPlayer().sendMessage("§3§oPrime hears your call and rings the grand bell in your name...");
+       // event.getPlayer().sendMessage("§3§o主听到了汝的呼唤，以汝的名义敲响了大钟...");
 
         //Give the effect to the players in the specified radius
         for (Entity e : location.getWorld().getNearbyEntities(location, 40, 40, 40)) {
             if (e instanceof Player && e.getEntityId() != event.getPlayer().getEntityId()) {
                 String color = name.charAt(0) == '&' ? name.substring(0,2) : "";
-                ((Player) e).sendTitle("&6A Grand Bell tolls", color + "The "+name + color + " Rings for thee", 10, 50, 20);
+                ((Player) e).sendTitle("&6大钟为汝敲响了", color + ""+name + color + "", 10, 50, 20);
                 ((LivingEntity) e).addPotionEffects(effects);
             }
         }
