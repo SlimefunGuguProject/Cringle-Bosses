@@ -23,7 +23,7 @@ public class Corrupt {
                 "&f标记周围玩家",
                 "&f并给予腐败效果",
                 "",
-                "&7不影响敲钟人本身");
+                "&7不影响敲钟人自身");
 
         ItemStack[] recipe = {
                 Souls.CRACKED_SOUL,              SlimefunItems.TALISMAN_LAVA,       Souls.CRACKED_SOUL,
