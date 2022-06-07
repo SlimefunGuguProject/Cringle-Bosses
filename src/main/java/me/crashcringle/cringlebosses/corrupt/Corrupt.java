@@ -18,7 +18,7 @@ public class Corrupt {
     public static void setup(CringleBosses cb, ItemGroup ig, Research research) {
 
         SlimefunItemStack corruptBell = new SlimefunItemStack("CRINGLE_CORRUPT_BELL", Material.BELL,
-                "&e时空扭曲之铃",
+                "&e腐化铃",
                 "",
                 "&f标记周围玩家",
                 "&f并给予腐败效果",
@@ -37,7 +37,7 @@ public class Corrupt {
                 new PotionEffect(PotionEffectType.ABSORPTION, 1200, 20)
         );
 
-        Bell bell = new Bell("&5Twisted &4Bell", potionEffects, ig, corruptBell, RecipeType.ANCIENT_ALTAR, recipe);
+        Bell bell = new Bell("&5腐化&4铃", potionEffects, ig, corruptBell, RecipeType.ANCIENT_ALTAR, recipe);
         bell.register(cb);
 
         research.addItems(bell);
