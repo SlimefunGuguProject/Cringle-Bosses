@@ -41,7 +41,7 @@ public class Prime {
                 new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 600, 1)
         );
 
-        Bell bell = new Bell("&bPrimordial Bell", potionEffects, ig, primordialBell, RecipeType.ANCIENT_ALTAR, recipe);
+        Bell bell = new Bell("&b寒武钟", potionEffects, ig, primordialBell, RecipeType.ANCIENT_ALTAR, recipe);
         bell.register(cb);
 
 
