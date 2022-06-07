@@ -20,11 +20,11 @@ public class Holy {
     public static void setup(CringleBosses cb, ItemGroup ig, Research research) {
 
         SlimefunItemStack holyBell = new SlimefunItemStack("CRINGLE_HOLY_BELL", Material.BELL,
-                "&eHoly Bell",
+                "&e圣钟",
                 "",
-                "&fGrants blessing to nearby players",
+                "&f给予附近玩家增益Buff",
                 "",
-                "&7Grand bells do not effect the ringer");
+                "&7不影响敲钟人自身");
 
         ItemStack[] recipe = {
                 Souls.PURIFIED_SOUL,              SlimefunItems.TALISMAN_KNIGHT,       Souls.PURIFIED_SOUL,
@@ -37,7 +37,7 @@ public class Holy {
                 new PotionEffect(PotionEffectType.HEALTH_BOOST, 600, 40)
         );
 
-        Bell bell = new Bell("&eHoly Bell", potionEffects, ig, holyBell, RecipeType.ANCIENT_ALTAR, recipe);
+        Bell bell = new Bell("&e圣钟", potionEffects, ig, holyBell, RecipeType.ANCIENT_ALTAR, recipe);
         bell.register(cb);
 
         research.addItems(bell);
