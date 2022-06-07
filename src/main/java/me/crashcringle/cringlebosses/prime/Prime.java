@@ -24,11 +24,11 @@ public class Prime {
     public static void setup(CringleBosses cb, ItemGroup ig, Research primeResearch) {
 
         SlimefunItemStack primordialBell = new SlimefunItemStack("CRINGLE_PRIMORDIAL_BELL", Material.BELL,
-                "&bPrimordial Bell",
+                "&b寒武钟",
                 "",
-                "&fInvigorates nearby players",
+                "&f鼓舞附近的玩家",
                 "",
-                "&7Grand bells do not effect the ringer");
+                "&7不影响敲钟人自身");
 
         ItemStack[] recipe = {
                 Souls.HARDENED_GEL,              SlimefunItems.TALISMAN_WARRIOR,       Souls.HARDENED_GEL,
