@@ -18,12 +18,12 @@ public class Rogue {
     public static void setup(CringleBosses cb, ItemGroup ig, Research research) {
 
         SlimefunItemStack rogueBell = new SlimefunItemStack("CRINGLE_ROGUE_BELL", Material.BELL,
-                "&aAssassin's Bell",
+                "&a雅典娜之钟",
                 "",
-                "&fGives the gift of the lost",
-                "&fTo nearby players",
+                "&f由雅典娜时期流传下来",
+                "&f它的响声鼓舞着玩家",
                 "",
-                "&7Grand bells do not effect the ringer");
+                "&7不影响敲钟人自身");
 
         ItemStack[] recipe = {
                 Souls.FADING_SOUL,              SlimefunItems.TALISMAN_TRAVELLER,       Souls.FADING_SOUL,
@@ -36,7 +36,7 @@ public class Rogue {
                 new PotionEffect(PotionEffectType.JUMP, 600, 3)
         );
 
-        Bell bell = new Bell("&aAssassin's Bell", potionEffects, ig, rogueBell, RecipeType.ANCIENT_ALTAR, recipe);
+        Bell bell = new Bell("&a雅典娜之钟", potionEffects, ig, rogueBell, RecipeType.ANCIENT_ALTAR, recipe);
         bell.register(cb);
 
         research.addItems(bell);
