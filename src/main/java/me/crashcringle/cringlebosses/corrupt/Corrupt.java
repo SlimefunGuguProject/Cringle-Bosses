@@ -18,12 +18,12 @@ public class Corrupt {
     public static void setup(CringleBosses cb, ItemGroup ig, Research research) {
 
         SlimefunItemStack corruptBell = new SlimefunItemStack("CRINGLE_CORRUPT_BELL", Material.BELL,
-                "&eTwisted Bell",
+                "&e时空扭曲之铃",
                 "",
-                "&fGrants the mark of corruption",
-                "&fto nearby players",
+                "&f标记周围玩家",
+                "&f并给予腐败效果",
                 "",
-                "&7Grand bells do not effect the ringer");
+                "&7不影响敲钟人本身");
 
         ItemStack[] recipe = {
                 Souls.CRACKED_SOUL,              SlimefunItems.TALISMAN_LAVA,       Souls.CRACKED_SOUL,
