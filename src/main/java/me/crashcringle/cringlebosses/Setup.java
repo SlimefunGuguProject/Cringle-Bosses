@@ -59,22 +59,22 @@ public class Setup {
 
         nestedItemGroup = new NestedItemGroup(new NamespacedKey(CringleBosses.inst(), "cringle_bosses"), itemGroupItem);
         resourcesItemGroup = new SubItemGroup(new NamespacedKey(CringleBosses.inst(), "cringle_resources"), nestedItemGroup, new CustomItemStack(Material.LANTERN, "&6合成配方"));
-        chaosItemGroup = new SubItemGroup(new NamespacedKey(CringleBosses.inst(), "chaos"), nestedItemGroup, new CustomItemStack(Material.REDSTONE, "&4Chaos Realix"));
-        primeItemGroup = new SubItemGroup(new NamespacedKey(CringleBosses.inst(), "primordial"), nestedItemGroup, new CustomItemStack(Material.TRIDENT, "&bPrime Realix"));
-        rogueItemGroup = new SubItemGroup(new NamespacedKey(CringleBosses.inst(), "rogue"), nestedItemGroup, new CustomItemStack(Material.WITHER_ROSE, "&2Rogue Realix"));
-        holyItemGroup = new SubItemGroup(new NamespacedKey(CringleBosses.inst(), "holy"), nestedItemGroup, new CustomItemStack(Material.HONEYCOMB, "&eHoly Realix"));
-        corruptItemGroup = new SubItemGroup(new NamespacedKey(CringleBosses.inst(), "corrupt"), nestedItemGroup, new CustomItemStack(Material.FIRE_CHARGE, "&5Corrupt Realix"));
-        oldItemGroup = new SubItemGroup(new NamespacedKey(CringleBosses.inst(), "old"), nestedItemGroup, new CustomItemStack(Material.TOTEM_OF_UNDYING, "&8Old Realix"));
+        chaosItemGroup = new SubItemGroup(new NamespacedKey(CringleBosses.inst(), "chaos"), nestedItemGroup, new CustomItemStack(Material.REDSTONE, "&4混沌"));
+        primeItemGroup = new SubItemGroup(new NamespacedKey(CringleBosses.inst(), "primordial"), nestedItemGroup, new CustomItemStack(Material.TRIDENT, "&b寒武"));
+        rogueItemGroup = new SubItemGroup(new NamespacedKey(CringleBosses.inst(), "rogue"), nestedItemGroup, new CustomItemStack(Material.WITHER_ROSE, "&2罪恶"));
+        holyItemGroup = new SubItemGroup(new NamespacedKey(CringleBosses.inst(), "holy"), nestedItemGroup, new CustomItemStack(Material.HONEYCOMB, "&e神圣"));
+        corruptItemGroup = new SubItemGroup(new NamespacedKey(CringleBosses.inst(), "corrupt"), nestedItemGroup, new CustomItemStack(Material.FIRE_CHARGE, "&5腐化"));
+        oldItemGroup = new SubItemGroup(new NamespacedKey(CringleBosses.inst(), "old"), nestedItemGroup, new CustomItemStack(Material.TOTEM_OF_UNDYING, "&8古迹"));
 
 
         NamespacedKey researchKey = new NamespacedKey(CringleBosses.inst(), "Chaos_bosses_research");
-        soulResearch = new Research(researchKey, 12600001, "The souls of reality", 24);
-        chaosResearch = new Research(researchKey, 12600002, "The footholds of chaos", 30);
-        primeResearch = new Research(researchKey, 12600003, "The manuscripts of the primordials", 30);
-        holyResearch = new Research(researchKey, 12600004, "The word of the God?", 30);
-        oldResearch = new Research(researchKey, 12600005, "The tales of old", 30);
-        rogueResearch = new Research(researchKey, 12600006, "Tales long since forgotten", 30);
-        corruptResearch = new Research(researchKey, 12600007, "The forbidden fruits of knowledge", 30);
+        soulResearch = new Research(researchKey, 12600001, "灵魂的真理", 45);
+        chaosResearch = new Research(researchKey, 12600002, "混沌的脚步声", 60);
+        primeResearch = new Research(researchKey, 12600003, "祖上的手稿", 65);
+        holyResearch = new Research(researchKey, 12600004, "上帝的言语", 56);
+        oldResearch = new Research(researchKey, 12600005, "古老的故事", 82);
+        rogueResearch = new Research(researchKey, 12600006, "遗忘在世间", 94);
+        corruptResearch = new Research(researchKey, 12600007, "知识的禁果", 100);
 
         ItemStack[] altarRecipe = {
                 null,                                       SlimefunItems.ANCIENT_ALTAR,                          null,
