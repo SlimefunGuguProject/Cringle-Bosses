@@ -65,12 +65,30 @@ public class Bell extends SlimefunItem implements WitherProof {
         //Give the effect to the players in the specified radius
         for (Entity e : location.getWorld().getNearbyEntities(location, 40, 40, 40)) {
             if (e instanceof Player && e.getEntityId() != event.getPlayer().getEntityId()) {
-                String color = name.charAt(0) == '&' ? name.substring(0,2) : "";
-                ((Player) e).sendTitle("&6A Grand Bell tolls", color + "The "+name + color + " Rings for thee", 10, 50, 20);
+                String color = name.charAt(0) == '&' ? "§"+name.substring(1) : name;
+                ((Player) e).sendTitle("§6A Grand Bell tolls", color + "The "+ color + "§6 Rings for thee", 5, 50, 20);
                 ((LivingEntity) e).addPotionEffects(effects);
             }
         }
     }
 
+//    private void onBlockRightClick(PlayerRightClickEvent event) {
+//        //This will prevent the bell from being used
+//        event.cancel();
+//        //Get the location of the player
+//        Location location = event.getPlayer().getLocation();
+//        //Play sound at the player's location
+//        location.getWorld().playSound(location, Sound.ENTITY_ELDER_GUARDIAN_CURSE, SoundCategory.NEUTRAL, 100, (float) 1.5);
+//        // event.getPlayer().sendMessage("§3§oPrime hears your call and rings the grand bell in your name...");
+//
+//        //Give the effect to the players in the specified radius
+//        for (Entity e : location.getWorld().getNearbyEntities(location, 40, 40, 40)) {
+//            if (e instanceof Player && e.getEntityId() != event.getPlayer().getEntityId()) {
+//                String color = name.charAt(0) == '&' ? "§"+name.substring(1) : name;
+//                ((Player) e).sendTitle("§6A Grand Bell tolls", color + "The "+ color + "§6 Rings for thee", 5, 50, 20);
+//                ((LivingEntity) e).addPotionEffects(effects);
+//            }
+//        }
+//    }
 
 }

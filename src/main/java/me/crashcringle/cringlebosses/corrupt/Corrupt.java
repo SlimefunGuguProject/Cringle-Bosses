@@ -18,7 +18,7 @@ public class Corrupt {
     public static void setup(CringleBosses cb, ItemGroup ig, Research research) {
 
         SlimefunItemStack corruptBell = new SlimefunItemStack("CRINGLE_CORRUPT_BELL", Material.BELL,
-                "&eTwisted Bell",
+                "&5Twisted &4Bell",
                 "",
                 "&fGrants the mark of corruption",
                 "&fto nearby players",

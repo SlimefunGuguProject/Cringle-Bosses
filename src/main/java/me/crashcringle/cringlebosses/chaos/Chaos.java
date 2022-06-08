@@ -11,10 +11,12 @@ import me.crashcringle.cringlebosses.other.Bell;
 import me.crashcringle.cringlebosses.other.Souls;
 import me.crashcringle.cringlebosses.other.SummoningAltar;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,8 +35,9 @@ public class Chaos {
                 new ItemStack(Material.END_CRYSTAL),        SlimefunItems.ENDER_RUNE,                               new ItemStack(Material.END_CRYSTAL),
                 SlimefunItems.ENDER_LUMP_3,                  Souls.SOUL_OF_MADNESS,                     SlimefunItems.ENDER_LUMP_3,
                 new ItemStack(Material.END_CRYSTAL),        SlimefunItems.ENDER_RUNE,                               new ItemStack(Material.END_CRYSTAL) };
-
-        CringleBoss spectre = new CringleBoss(ig, spectreOfChaos, SummoningAltar.SUMMONING_ALTAR, spectreRecipe);
+        List<ItemStack> drops = new ArrayList<>();
+        drops.add(Souls.SOUL_OF_MADNESS);
+        CringleBoss spectre = new CringleBoss(spectreOfChaos.getDisplayName(), CringleBoss.bossType.BOTH, EntityType.ENDERMAN, drops, ig, spectreOfChaos, spectreRecipe);
         spectre.register(cb);
 
 

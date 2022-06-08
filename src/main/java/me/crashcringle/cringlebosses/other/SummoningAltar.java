@@ -22,7 +22,7 @@ public class SummoningAltar extends SlimefunItem {
     /**
      * This number represents a delay in ticks between two ritual steps.
      * The whole ritual process consists of 36 steps, an item is consumed every 4 steps (8 times)
-     * and the output is spawned after the 36th step completes.
+     * and the mob is spawned after the 36th step completes.
      */
     private static final int DEFAULT_STEP_DELAY = 12;
 
@@ -30,8 +30,9 @@ public class SummoningAltar extends SlimefunItem {
 
     private final ItemSetting<Integer> stepDelay = new IntRangeSetting(this, "step-delay", 0, DEFAULT_STEP_DELAY, Integer.MAX_VALUE);
 
-    public static final RecipeType SUMMONING_ALTAR = new RecipeType(new NamespacedKey(CringleBosses.inst(), "CRINGLE_SUMMONING_ALTAR"), Setup.SUMMONING_ALTAR, (recipe, output) -> {
-        SummoningAltarRecipe altarRecipe = new SummoningAltarRecipe(Arrays.asList(recipe), output);
+    public static final RecipeType SUMMONING_ALTAR =
+        new RecipeType(new NamespacedKey(CringleBosses.inst(), "CRINGLE_SUMMONING_ALTAR"), Setup.SUMMONING_ALTAR, (recipe, mob) -> {
+        SummoningAltarRecipe altarRecipe = new SummoningAltarRecipe(Arrays.asList(recipe), mob);
         SummoningAltar altar = ((SummoningAltar) Setup.SUMMONING_ALTAR.getItem());
         altar.getRecipes().add(altarRecipe);
     });

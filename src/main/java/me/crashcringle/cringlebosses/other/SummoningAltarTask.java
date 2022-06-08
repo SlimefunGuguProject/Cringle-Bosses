@@ -1,11 +1,15 @@
 package me.crashcringle.cringlebosses.other;
 
 import io.github.thebusybiscuit.slimefun4.implementation.Slimefun;
+import me.crashcringle.cringlebosses.CringleBoss;
+import me.crashcringle.cringlebosses.CringleBosses;
 import me.crashcringle.cringlebosses.Setup;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.RespawnAnchor;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -18,8 +22,8 @@ public class SummoningAltarTask implements Runnable {
     private final SummoningPedestal pedestalItem = (SummoningPedestal) Setup.SUMMONING_PEDESTAL.getItem();
     private final Block altar;
     private final int stepDelay;
-    private final Location dropLocation;
-    private final ItemStack output;
+    private final Location spawnLocation;
+    private final CringleBoss mob;
     private final List<Block> pedestals;
     private final List<ItemStack> items;
 
@@ -31,12 +35,12 @@ public class SummoningAltarTask implements Runnable {
     private final Player player;
 
     @ParametersAreNonnullByDefault
-    public SummoningAltarTask(SummoningAltarListener listener, Block altar, int stepDelay, ItemStack output, List<Block> pedestals, List<ItemStack> items, Player player) {
+    public SummoningAltarTask(SummoningAltarListener listener, Block altar, int stepDelay, CringleBoss mob, List<Block> pedestals, List<ItemStack> items, Player player) {
         this.listener = listener;
-        this.dropLocation = altar.getLocation().add(0.5, 1.3, 0.5);
+        this.spawnLocation = altar.getLocation().add(0.5, 1.3, 0.5);
         this.stepDelay = stepDelay;
         this.altar = altar;
-        this.output = output;
+        this.mob = mob;
         this.pedestals = pedestals;
         this.items = items;
         this.player = player;
@@ -76,7 +80,7 @@ public class SummoningAltarTask implements Runnable {
         }
 
         this.stage += 1;
-        Slimefun.runSync(this, stepDelay);
+        CringleBosses.runSync(this, stepDelay);
     }
 
     private boolean checkLockedItems() {
@@ -90,12 +94,12 @@ public class SummoningAltarTask implements Runnable {
     }
 
     private void idle() {
-        dropLocation.getWorld().spawnParticle(Particle.SOUL, dropLocation, 16, 1.2F, 0F, 1.2F);
-        dropLocation.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, dropLocation, 8, 0.2F, 0F, 0.2F);
+        spawnLocation.getWorld().spawnParticle(Particle.SOUL, spawnLocation, 16, 1.2F, 0F, 1.2F);
+        spawnLocation.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, spawnLocation, 8, 0.2F, 0F, 0.2F);
 
         for (Location loc : particleLocations) {
-            dropLocation.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, loc, 16, 0.3F, 0.2F, 0.3F);
-            dropLocation.getWorld().spawnParticle(Particle.CRIT_MAGIC, loc, 8, 0.3F, 0.2F, 0.3F);
+            spawnLocation.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, loc, 16, 0.3F, 0.2F, 0.3F);
+            spawnLocation.getWorld().spawnParticle(Particle.CRIT_MAGIC, loc, 8, 0.3F, 0.2F, 0.3F);
         }
     }
 
@@ -110,12 +114,12 @@ public class SummoningAltarTask implements Runnable {
             items.add(pedestalItem.getOriginalItemStack(entity));
             pedestal.getWorld().playSound(pedestal.getLocation(), Sound.ENTITY_EVOKER_PREPARE_ATTACK, 1F, 1.8F);
 
-            dropLocation.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, pedestal.getLocation().add(0.5, 1.5, 0.5), 16, 0.3F, 0.2F, 0.3F);
-            dropLocation.getWorld().spawnParticle(Particle.SOUL, pedestal.getLocation().add(0.5, 1.5, 0.5), 8, 0.3F, 0.2F, 0.3F);
+            spawnLocation.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, pedestal.getLocation().add(0.5, 1.5, 0.5), 16, 0.3F, 0.2F, 0.3F);
+            spawnLocation.getWorld().spawnParticle(Particle.SOUL, pedestal.getLocation().add(0.5, 1.5, 0.5), 8, 0.3F, 0.2F, 0.3F);
 
             positionLock.remove(entity);
             entity.remove();
-            entity.removeMetadata("no_pickup", Slimefun.instance());
+            entity.removeMetadata("no_pickup", CringleBosses.inst());
         }
     }
 
@@ -131,7 +135,7 @@ public class SummoningAltarTask implements Runnable {
 
         // This should re-enable altar blocks on craft failure.
         listener.getAltarsInUse().remove(altar.getLocation());
-        dropLocation.getWorld().playSound(dropLocation, Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, 1F, 1F);
+        spawnLocation.getWorld().playSound(spawnLocation, Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, 1F, 1F);
         positionLock.clear();
         listener.getAltars().remove(altar);
     }
@@ -139,13 +143,13 @@ public class SummoningAltarTask implements Runnable {
     private void finish() {
         if (running) {
 
-            SummoningAltarCraftEvent event = new SummoningAltarCraftEvent(output, altar, player);
+            SummoningAltarSpawnEvent event = new SummoningAltarSpawnEvent(mob, altar, player);
             Bukkit.getPluginManager().callEvent(event);
 
             if (!event.isCancelled()) {
-                dropLocation.getWorld().playSound(dropLocation, Sound.ENTITY_ZOMBIE_VILLAGER_CURE, 1F, 1F);
-                dropLocation.getWorld().playEffect(dropLocation, Effect.STEP_SOUND, Material.EMERALD_BLOCK);
-                dropLocation.getWorld().dropItemNaturally(dropLocation.add(0, -0.5, 0), event.getItem());
+                spawnLocation.getWorld().playSound(spawnLocation, Sound.ENTITY_ZOMBIE_VILLAGER_CURE, 1F, 1F);
+                spawnLocation.getWorld().playEffect(spawnLocation, Effect.STEP_SOUND, Material.EMERALD_BLOCK);
+                event.getMob().setUpMob(spawnLocation);
             }
 
             for (Block b : pedestals) {
@@ -159,7 +163,7 @@ public class SummoningAltarTask implements Runnable {
             listener.getAltarsInUse().remove(altar.getLocation());
             listener.getAltars().remove(altar);
         } else {
-            dropLocation.getWorld().playSound(dropLocation, Sound.ENTITY_ZOMBIE_BREAK_WOODEN_DOOR, 1F, 1F);
+            spawnLocation.getWorld().playSound(spawnLocation, Sound.ENTITY_ZOMBIE_BREAK_WOODEN_DOOR, 1F, 1F);
         }
     }
 }

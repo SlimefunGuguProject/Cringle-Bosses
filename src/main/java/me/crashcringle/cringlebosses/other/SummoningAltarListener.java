@@ -15,6 +15,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.CustomItemStack;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.items.ItemUtils;
 import io.github.thebusybiscuit.slimefun4.libraries.dough.protection.Interaction;
+import me.crashcringle.cringlebosses.CringleBoss;
 import me.crashcringle.cringlebosses.CringleBosses;
 import me.mrCookieSlime.Slimefun.api.BlockStorage;
 import org.bukkit.GameMode;
@@ -144,9 +145,12 @@ public class SummoningAltarListener implements Listener {
             Item entity = stack.get();
             UUID uuid = entity.getUniqueId();
             removedItems.add(uuid);
-            CringleBosses.inst().getLogger().log(Level.WARNING, "There was already an item here" );
+            for (UUID id : removedItems) {
+                CringleBosses.inst().getLogger().log(Level.WARNING, id.toString());
 
-            Slimefun.runSync(() -> removedItems.remove(uuid), 30L);
+            }
+
+            CringleBosses.runSync(() -> removedItems.remove(uuid), 30L);
 
             entity.remove();
             p.playSound(pedestal.getLocation(), Sound.ENTITY_ITEM_PICKUP, 1F, 1F);
@@ -213,10 +217,10 @@ public class SummoningAltarListener implements Listener {
                 input.add(pedestalItem.getOriginalItemStack(stack.get()));
             }
         }
-        Optional<ItemStack> result = getRecipeOutput(catalyst, input);
+        Optional<CringleBoss> result = getRecipeOutput(catalyst, input);
 
         if (result.isPresent()) {
-            if (SlimefunUtils.canPlayerUseItem(p, result.get(), true)) {
+            if (SlimefunUtils.canPlayerUseItem(p, result.get().getItem(), true)) {
                 List<ItemStack> consumed = new ArrayList<>();
                 consumed.add(catalyst);
 
@@ -227,7 +231,7 @@ public class SummoningAltarListener implements Listener {
                 b.getWorld().playSound(b.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 1, 1);
 
                 SummoningAltarTask task = new SummoningAltarTask(this, b, altarItem.getStepDelay(), result.get(), pedestals, consumed, p);
-                Slimefun.runSync(task, 10L);
+                CringleBosses.runSync(task, 10L);
             } else {
                 altars.remove(b);
 
@@ -300,7 +304,7 @@ public class SummoningAltarListener implements Listener {
         return list;
     }
 
-    public @Nonnull Optional<ItemStack> getRecipeOutput(@Nonnull ItemStack catalyst, @Nonnull List<ItemStack> inputs) {
+    public @Nonnull Optional<CringleBoss> getRecipeOutput(@Nonnull ItemStack catalyst, @Nonnull List<ItemStack> inputs) {
         if (inputs.size() != 8) {
             return Optional.empty();
         }
@@ -320,11 +324,11 @@ public class SummoningAltarListener implements Listener {
         return checkRecipe(wrapper, items);
     }
 
-    private @Nonnull Optional<ItemStack> checkRecipe(@Nonnull ItemStack catalyst, @Nonnull List<ItemStackWrapper> items) {
+    private @Nonnull Optional<CringleBoss> checkRecipe(@Nonnull ItemStack catalyst, @Nonnull List<ItemStackWrapper> items) {
 
         for (SummoningAltarRecipe recipe : altarItem.getRecipes()) {
             if (SlimefunUtils.isItemSimilar(catalyst, recipe.getCatalyst(), true)) {
-                Optional<ItemStack> optional = checkPedestals(items, recipe);
+                Optional<CringleBoss> optional = checkPedestals(items, recipe);
 
                 if (optional.isPresent()) {
                     return optional;
@@ -335,14 +339,14 @@ public class SummoningAltarListener implements Listener {
         return Optional.empty();
     }
 
-    private @Nonnull Optional<ItemStack> checkPedestals(@Nonnull List<ItemStackWrapper> items, @Nonnull SummoningAltarRecipe recipe) {
+    private @Nonnull Optional<CringleBoss> checkPedestals(@Nonnull List<ItemStackWrapper> items, @Nonnull SummoningAltarRecipe recipe) {
         for (int i = 0; i < 8; i++) {
             if (SlimefunUtils.isItemSimilar(items.get(i), recipe.getInput().get(0), true)) {
                 for (int j = 1; j < 8; j++) {
                     if (!SlimefunUtils.isItemSimilar(items.get((i + j) % items.size()), recipe.getInput().get(j), true)) {
                         break;
                     } else if (j == 7) {
-                        return Optional.of(recipe.getOutput());
+                        return Optional.of(recipe.getMob());
                     }
                 }
             }

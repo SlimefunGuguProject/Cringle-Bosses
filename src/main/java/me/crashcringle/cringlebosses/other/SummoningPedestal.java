@@ -140,8 +140,6 @@ public class SummoningPedestal extends SimpleSlimefunItem<BlockUseHandler> {
             ItemUtils.consumeItem(hand, false);
         }
 
-        CringleBosses.inst().getLogger().log(Level.WARNING, "So it made it this far" );
-
         Item entity = SlimefunUtils.spawnItem(b.getLocation().add(0.5, 1.2, 0.5), displayItem, ItemSpawnReason.ANCIENT_PEDESTAL_PLACE_ITEM);
 
         if (entity != null) {
@@ -149,7 +147,6 @@ public class SummoningPedestal extends SimpleSlimefunItem<BlockUseHandler> {
             entity.setCustomNameVisible(true);
             entity.setCustomName(nametag);
             SlimefunUtils.markAsNoPickup(entity, "altar_item");
-            CringleBosses.inst().getLogger().log(Level.WARNING, "Should be placed" );
 
             p.playSound(b.getLocation(), Sound.ENTITY_ITEM_PICKUP, 0.3F, 0.3F);
         }
