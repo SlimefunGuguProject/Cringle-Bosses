@@ -34,7 +34,6 @@ public class Setup {
             "&4Summoning Pedestal",
             "",
             "&cPart of the Summoning Altar");
-    
     private NestedItemGroup nestedItemGroup;
     private ItemGroup resourcesItemGroup;
     private ItemGroup chaosItemGroup;
@@ -52,6 +51,7 @@ public class Setup {
 
     private Research primeResearch;
     private Research soulResearch;
+    private Research chowResearch;
 
     public Setup() {
 
@@ -69,12 +69,16 @@ public class Setup {
 
 
         soulResearch = new Research(new NamespacedKey(CringleBosses.inst(), "Souls_research"), 12600001, "The souls of reality", 24);
-        chaosResearch = new Research(new NamespacedKey(CringleBosses.inst(), "Chaos_tier1_research"), 12600002, "The footholds of chaos", 30);
-        primeResearch = new Research(new NamespacedKey(CringleBosses.inst(), "Prime_tier1_research"), 12600003, "The manuscripts of the primordials", 30);
-        holyResearch = new Research(new NamespacedKey(CringleBosses.inst(), "Holy_tier1_research"), 12600004, "The word of the God?", 30);
-        oldResearch = new Research(new NamespacedKey(CringleBosses.inst(), "Old_tier1_bosses_research"), 12600005, "The tales of old", 30);
-        rogueResearch = new Research(new NamespacedKey(CringleBosses.inst(), "Rogue_tier1_research"), 12600006, "Tales long since forgotten", 30);
-        corruptResearch = new Research(new NamespacedKey(CringleBosses.inst(), "Corrupt_tier1_research"), 12600007, "The forbidden fruits of knowledge", 30);
+        chaosResearch = new Research(new NamespacedKey(CringleBosses.inst(), "Chaos_tier1_research"), 12600002, "The footholds of chaos", 75);
+        primeResearch = new Research(new NamespacedKey(CringleBosses.inst(), "Prime_tier1_research"), 12600003, "The manuscripts of the primordials", 75);
+        holyResearch = new Research(new NamespacedKey(CringleBosses.inst(), "Holy_tier1_research"), 12600004, "The word of the God?", 75);
+        oldResearch = new Research(new NamespacedKey(CringleBosses.inst(), "Old_tier1_bosses_research"), 12600005, "The tales of old", 75);
+        rogueResearch = new Research(new NamespacedKey(CringleBosses.inst(), "Rogue_tier1_research"), 12600006, "Tales long since forgotten", 75);
+        corruptResearch = new Research(new NamespacedKey(CringleBosses.inst(), "Corrupt_tier1_research"), 12600007, "The forbidden fruits of knowledge", 75);
+        chowResearch = new Research(new NamespacedKey(CringleBosses.inst(), "Chow_research"), 12600008, "Dog Food...", 24);
+
+
+
 
         ItemStack[] altarRecipe = {
                 null,                                       SlimefunItems.ANCIENT_ALTAR,                          null,
@@ -84,18 +88,16 @@ public class Setup {
         SummoningAltar altar = new SummoningAltar(chaosItemGroup, SUMMONING_ALTAR, RecipeType.MAGIC_WORKBENCH, altarRecipe);
         altar.register(CringleBosses.inst());
 
-
-
         ItemStack[] pedestalRecipe = {
                 new ItemStack(Material.CRYING_OBSIDIAN),    new ItemStack(Material.CRYING_OBSIDIAN),            new ItemStack(Material.CRYING_OBSIDIAN),
                 new ItemStack(Material.GLOWSTONE),          SlimefunItems.MAGIC_LUMP_3,                  new ItemStack(Material.GLOWSTONE),
                 new ItemStack(Material.CRYING_OBSIDIAN),    new ItemStack(Material.CRYING_OBSIDIAN),            new ItemStack(Material.CRYING_OBSIDIAN) };
 
-        SummoningPedestal pedestal = new SummoningPedestal(chaosItemGroup, SUMMONING_PEDESTAL, RecipeType.MAGIC_WORKBENCH, pedestalRecipe, new SlimefunItemStack(SUMMONING_PEDESTAL, 4));
+        SummoningPedestal pedestal = new SummoningPedestal(resourcesItemGroup, SUMMONING_PEDESTAL, RecipeType.MAGIC_WORKBENCH, pedestalRecipe, new SlimefunItemStack(SUMMONING_PEDESTAL, 4));
         pedestal.register(CringleBosses.inst());
-
         new SummoningAltarListener(CringleBosses.inst(), altar, pedestal);
 
+        Hounds.setup(CringleBosses.inst(), resourcesItemGroup, chowResearch);
         Souls.setup(CringleBosses.inst(), resourcesItemGroup, soulResearch);
         Chaos.setup(CringleBosses.inst(), chaosItemGroup, chaosResearch);
         Prime.setup(CringleBosses.inst(), primeItemGroup, primeResearch);
@@ -103,7 +105,6 @@ public class Setup {
         Corrupt.setup(CringleBosses.inst(), corruptItemGroup, corruptResearch);
         Old.setup(CringleBosses.inst(), oldItemGroup, oldResearch);
         Rogue.setup(CringleBosses.inst(), rogueItemGroup, rogueResearch);
-
 
     }
 }
