@@ -211,7 +211,6 @@ public class SummoningAltarListener implements Listener {
 
         for (Block pedestal : pedestals) {
             Optional<Item> stack = pedestalItem.getPlacedItem(pedestal);
-            CringleBosses.inst().getLogger().log(Level.WARNING, "Pedestal: " + stack.get().getName());
 
             if (stack.isPresent()) {
                 input.add(pedestalItem.getOriginalItemStack(stack.get()));

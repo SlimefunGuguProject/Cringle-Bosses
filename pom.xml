@@ -64,17 +64,18 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.elmakers.mine.bukkit</groupId>
-            <artifactId>MagicAPI</artifactId>
-            <version>10.2</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>com.magmaguy</groupId>
             <artifactId>EliteMobs</artifactId>
             <version>1.0.3</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/utils/EliteMobs.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.elmakers.mine.bukkit</groupId>
+            <artifactId>Magic</artifactId>
+            <version>10.8.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/utils/Magic.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.github.Slimefun</groupId>

@@ -147,8 +147,9 @@ public class SummoningAltarTask implements Runnable {
             Bukkit.getPluginManager().callEvent(event);
 
             if (!event.isCancelled()) {
-                spawnLocation.getWorld().playSound(spawnLocation, Sound.ENTITY_ZOMBIE_VILLAGER_CURE, 1F, 1F);
+                spawnLocation.getWorld().playSound(spawnLocation, Sound.ENTITY_WITHER_SPAWN, 1F, 1.8F);
                 spawnLocation.getWorld().playEffect(spawnLocation, Effect.STEP_SOUND, Material.EMERALD_BLOCK);
+                spawnLocation.getWorld().spawnParticle(Particle.EXPLOSION_LARGE, altar.getLocation().add(0.5, 1.5, 0.5), 8, 0.3F, 0.2F, 0.3F);
                 event.getMob().setUpMob(spawnLocation);
             }
 

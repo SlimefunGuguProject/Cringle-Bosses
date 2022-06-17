@@ -1,6 +1,7 @@
 package me.crashcringle.cringlebosses;
 
 import com.elmakers.mine.bukkit.api.magic.MagicAPI;
+import com.google.gson.Gson;
 import io.github.thebusybiscuit.slimefun4.api.MinecraftVersion;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import org.apache.commons.lang.Validate;
@@ -24,7 +25,9 @@ import static io.github.thebusybiscuit.slimefun4.implementation.Slimefun.getMine
 public class CringleBosses extends JavaPlugin implements SlimefunAddon {
 
     private static CringleBosses instance;
+    protected static Gson gson;
 
+    public static MagicAPI magicAPI;
     public static CringleBosses inst() {
         return instance;
     }
@@ -32,7 +35,7 @@ public class CringleBosses extends JavaPlugin implements SlimefunAddon {
     public void onEnable() {
 
         instance = this;
-        MagicAPI api = getMagicAPI();
+        this.magicAPI = getMagicAPI();
         CringleBosses.inst().getLogger().log(Level.INFO, "########################################");
         CringleBosses.inst().getLogger().log(Level.INFO, "            Cringle Bosses              ");
         CringleBosses.inst().getLogger().log(Level.INFO, "########################################");
@@ -48,6 +51,7 @@ public class CringleBosses extends JavaPlugin implements SlimefunAddon {
 
     @Override
     public void onDisable() {
+
         // Logic for disabling the plugin...
     }
     public static @Nullable BukkitTask runSync(@Nonnull Runnable runnable, long delay) {
@@ -86,6 +90,12 @@ public class CringleBosses extends JavaPlugin implements SlimefunAddon {
          * If you are using your main class for this, simply return "this".
          */
         return this;
+    }
+    public static Gson getGson() {
+        if (gson == null) {
+            gson = new Gson();
+        }
+        return gson;
     }
 
 }
