@@ -4,10 +4,12 @@ import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
 import io.github.thebusybiscuit.slimefun4.api.researches.Research;
 import io.github.thebusybiscuit.slimefun4.implementation.SlimefunItems;
+import me.crashcringle.cringlebosses.CringleBoss;
 import me.crashcringle.cringlebosses.CringleBosses;
 import me.crashcringle.cringlebosses.other.Bell;
 import me.crashcringle.cringlebosses.other.Souls;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -16,6 +18,23 @@ import java.util.Arrays;
 import java.util.List;
 public class Corrupt {
     public static void setup(CringleBosses cb, ItemGroup ig, Research research) {
+
+        SlimefunItemStack spectreOfCorruption = new SlimefunItemStack("CRINGLE_SPECTRE_OF_CORRUPTION", Material.ENDERMAN_SPAWN_EGG,
+                "&5Spectre of Corruption",
+                "",
+                "&7Summons the Spectre of Corruption",
+                "",
+                "&cMust be used at the appropriate Summoning Altar");
+
+        ItemStack[] spectre2Recipe = {
+                new ItemStack(Material.END_CRYSTAL),        SlimefunItems.ENDER_RUNE,                               new ItemStack(Material.END_CRYSTAL),
+                SlimefunItems.ENDER_LUMP_3,                  Souls.CRACKED_SOUL,                     SlimefunItems.ENDER_LUMP_3,
+                new ItemStack(Material.END_CRYSTAL),        SlimefunItems.ENDER_RUNE,                               new ItemStack(Material.END_CRYSTAL) };
+        CringleBoss spectre2 = new CringleBoss(spectreOfCorruption.getDisplayName(), CringleBoss.bossType.MAGIC_ELITE,  EntityType.ENDERMAN, 100, ig, spectreOfCorruption, spectre2Recipe);
+        spectre2.setMagicInternalName("spectreofchaos");
+        spectre2.register(cb);
+
+
 
         SlimefunItemStack corruptBell = new SlimefunItemStack("CRINGLE_CORRUPT_BELL", Material.BELL,
                 "&5Twisted &4Bell",

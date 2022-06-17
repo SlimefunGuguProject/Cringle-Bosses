@@ -31,8 +31,8 @@ public class Rogue {
                 Souls.FADING_SOUL,              SlimefunItems.GOLD_24K,        Souls.FADING_SOUL};
 
         List<PotionEffect> potionEffects = Arrays.asList(
-                new PotionEffect(PotionEffectType.INVISIBILITY, 600, 1),
-                new PotionEffect(PotionEffectType.SPEED, 600, 2),
+                new PotionEffect(PotionEffectType.INVISIBILITY, 1000, 1),
+                new PotionEffect(PotionEffectType.SPEED, 600, 6),
                 new PotionEffect(PotionEffectType.JUMP, 600, 3)
         );
 
