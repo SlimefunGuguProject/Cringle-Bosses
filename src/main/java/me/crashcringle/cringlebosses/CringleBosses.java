@@ -4,6 +4,7 @@ import com.elmakers.mine.bukkit.api.magic.MagicAPI;
 import com.google.gson.Gson;
 import io.github.thebusybiscuit.slimefun4.api.MinecraftVersion;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
+import me.crashcringle.cringlebosses.data.Data;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -46,12 +47,12 @@ public class CringleBosses extends JavaPlugin implements SlimefunAddon {
             // You could start an Auto-Updater for example
         }
         new Setup();
-
+        Data.loadPlayerHounds();
     }
 
     @Override
     public void onDisable() {
-
+        Data.getPlayerHoundsAndSave();
         // Logic for disabling the plugin...
     }
     public static @Nullable BukkitTask runSync(@Nonnull Runnable runnable, long delay) {

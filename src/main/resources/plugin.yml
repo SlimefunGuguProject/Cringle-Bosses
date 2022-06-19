@@ -5,7 +5,7 @@ name: CringleBosses
 author: Crash Cringle
 
 ## CHANGE this to a meaningful but short description of your plugin.
-description: A generic Slimefun4-Addon
+description: The Matrix Slimefun-Addon
 
 ## CHANGE this to the path of the class that extends JavaPlugin.
 main: me.crashcringle.cringlebosses.CringleBosses
