@@ -38,8 +38,8 @@ public class Hounds {
             "&bHound Control Rod",
             "",
             LoreBuilder.RIGHT_CLICK_TO_USE,
-            "&7Command your Hounds to sit",
-            "&or rise");
+            "&7Commands your Hounds to sit",
+            "&for rise depending...");
     public static Map<String, ArrayList<Integer>> getPlayerHounds() {
         return playerHounds;
     }
@@ -68,9 +68,9 @@ public class Hounds {
     public static void setup(CringleBosses cb, ItemGroup ig, Research research) {
         List<PotionEffect> angelEffects = Arrays.asList(
                 new PotionEffect(PotionEffectType.HEAL, 10, 300),
-                new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 10000, 5),
+                new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 10000, 2),
                 new PotionEffect(PotionEffectType.REGENERATION, 10000, 2),
-                new PotionEffect(PotionEffectType.HEALTH_BOOST, 10000, 200),
+                new PotionEffect(PotionEffectType.HEALTH_BOOST, 10000, 50),
                 new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 10000, 1),
                 new PotionEffect(PotionEffectType.SPEED, 10000, 4),
                 new PotionEffect(PotionEffectType.JUMP, 10000, 5)
@@ -78,9 +78,9 @@ public class Hounds {
         List<PotionEffect> hellEffects = Arrays.asList(
                 new PotionEffect(PotionEffectType.SPEED, 10000, 1),
                 new PotionEffect(PotionEffectType.HEAL, 10, 300),
-                new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 10000, 10),
+                new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 10000, 5),
                 new PotionEffect(PotionEffectType.REGENERATION, 10000, 1),
-                new PotionEffect(PotionEffectType.HEALTH_BOOST, 10000, 100),
+                new PotionEffect(PotionEffectType.HEALTH_BOOST, 10000, 30),
                 new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 10000, 1),
                 new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 10000, 2)
         );
@@ -89,7 +89,7 @@ public class Hounds {
                 new PotionEffect(PotionEffectType.JUMP, 10000, 5),
                 new PotionEffect(PotionEffectType.HEAL, 10, 300),
                 new PotionEffect(PotionEffectType.CONDUIT_POWER, 10000, 2),
-                new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 10000, 20),
+                new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 10000, 7),
                 new PotionEffect(PotionEffectType.REGENERATION, 10000, 1),
                 new PotionEffect(PotionEffectType.HEALTH_BOOST, 10000, 100),
                 new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 10000, 1),
@@ -120,8 +120,8 @@ public class Hounds {
                         null,          null,     SlimefunItems.INFUSED_MAGNET});
         angelPupChow.register(cb);
         hellHoundChow.register(cb);
-        controlRod.register(cb);
         oreoChow.register(cb);
+        controlRod.register(cb);
         research.addItems(angelPupChow,hellHoundChow,oreoChow, controlRod);
         research.register();
     }

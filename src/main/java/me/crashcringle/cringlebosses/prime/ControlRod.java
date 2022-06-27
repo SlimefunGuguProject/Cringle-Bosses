@@ -14,6 +14,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Wolf;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -31,14 +32,13 @@ public class ControlRod extends SlimefunItem {
 
     private void useControlRod(PlayerRightClickEvent event) {
         if (Hounds.getPlayerHounds().containsKey(event.getPlayer().getName())) {
-            AtomicReference<List<Entity>> nearbyEntities = null;
-            CringleBosses.runSync(() -> nearbyEntities.set(event.getPlayer().getNearbyEntities(30, 30, 30)), 30L);
+            List<Entity> nearbyEntities = event.getPlayer().getNearbyEntities(30, 30, 30);
             event.getPlayer().getWorld().playSound(event.getPlayer().getLocation(), Sound.BLOCK_AMETHYST_BLOCK_CHIME, SoundCategory.NEUTRAL, 100, (float) 0.5);
-            for (Entity entity : nearbyEntities.get()) {
+            for (Entity entity : nearbyEntities) {
                 if (entity instanceof Wolf) {
                     Wolf wolf = (Wolf) entity;
                     if (Hounds.getPlayerHounds().get(event.getPlayer().getName()).contains(entity.getEntityId())) {
-                        ((Wolf) entity).setSitting(!wolf.isSitting());
+                        CringleBosses.runSync(() -> ((Wolf) entity).setSitting(!wolf.isSitting()), 1L);
                     }
                 }
             }

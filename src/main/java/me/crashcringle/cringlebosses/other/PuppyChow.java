@@ -18,6 +18,7 @@ import org.bukkit.potion.PotionEffect;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 
 public class PuppyChow extends SlimefunItem {
@@ -80,8 +81,8 @@ public class PuppyChow extends SlimefunItem {
                 wolf.setCustomNameVisible(true);
                 wolf.addPotionEffects(getEffects());
                 CringleBosses.inst().getLogger().log(Level.INFO, "Registering a new Hound...");
+                Objects.requireNonNull(Hounds.getPlayerHounds().computeIfPresent(event.getPlayer().getName(), (key, val) -> val)).add(wolf.getEntityId());
                 Hounds.getPlayerHounds().computeIfAbsent(event.getPlayer().getName(), k -> new ArrayList<>()).add(wolf.getEntityId());
-                Hounds.getPlayerHounds().computeIfPresent(event.getPlayer().getName(), (key, val) -> val).add(wolf.getEntityId());
                 CringleBosses.inst().getLogger().log(Level.INFO, event.getPlayer().getName() + " has " + Hounds.getPlayerHounds().get(event.getPlayer().getName()).size() + " hounds!");
             }
         }
