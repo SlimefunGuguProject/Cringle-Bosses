@@ -60,12 +60,12 @@ public class SummoningPedestal extends SimpleSlimefunItem<BlockUseHandler> {
     public SummoningPedestal(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe, ItemStack recipeOutput) {
         super(itemGroup, item, recipeType, recipe, recipeOutput);
 
-        addItemHandler(onBreak());
+        addItemHandler(onBreak(), getItemHandler());
     }
 
     @Override
     public @Nonnull BlockUseHandler getItemHandler() {
-        return (e) -> e.cancel();
+        return PlayerRightClickEvent::cancel;
     }
 
     private @Nonnull BlockBreakHandler onBreak() {

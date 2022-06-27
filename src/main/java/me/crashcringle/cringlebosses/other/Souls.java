@@ -14,6 +14,7 @@ import io.github.thebusybiscuit.slimefun4.utils.SlimefunUtils;
 import io.github.thebusybiscuit.slimefun4.utils.itemstack.ColoredFireworkStar;
 import me.crashcringle.cringlebosses.CringleBoss;
 import me.crashcringle.cringlebosses.CringleBosses;
+import me.crashcringle.cringlebosses.corrupt.CrackedSoul;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -80,7 +81,7 @@ public class Souls {
                         null, new CustomItemStack(SlimefunUtils.getCustomHead(HeadTexture.CHEESE.getTexture()), "&5Kill Mobs of Chaos"), null,
                         null, null, null}));
 
-        souls.add(new SlimefunItem(ig, CRACKED_SOUL, RecipeType.BARTER_DROP,
+        souls.add(new CrackedSoul(ig, CRACKED_SOUL, RecipeType.BARTER_DROP,
                 new ItemStack[] {
                         null, null, null,
                         new CustomItemStack(SlimefunUtils.getCustomHead(HeadTexture.PIGLIN_HEAD.getTexture()), "Piglin"), null , new CustomItemStack(Material.NETHERITE_SWORD, "&bMob Drop", "", "&cKill Corrupted Mobs"),

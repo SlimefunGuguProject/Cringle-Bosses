@@ -6,6 +6,7 @@ import com.elmakers.mine.bukkit.utility.CompatibilityLib;
 import com.elmakers.mine.bukkit.utility.ConfigurationUtils;
 import com.google.gson.stream.JsonReader;
 import com.magmaguy.elitemobs.ChatColorConverter;
+import com.magmaguy.elitemobs.MetadataHandler;
 import com.magmaguy.elitemobs.config.custombosses.CustomBossesConfig;
 import com.magmaguy.elitemobs.config.custombosses.CustomBossesConfigFields;
 import com.magmaguy.elitemobs.mobconstructor.EliteEntity;
@@ -18,15 +19,19 @@ import io.github.thebusybiscuit.slimefun4.api.items.ItemGroup;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItem;
 import io.github.thebusybiscuit.slimefun4.api.items.SlimefunItemStack;
 import io.github.thebusybiscuit.slimefun4.api.recipes.RecipeType;
+import lombok.Getter;
 import me.crashcringle.cringlebosses.other.SummoningAltar;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.StringReader;
 import java.util.HashSet;
@@ -42,68 +47,35 @@ import static me.crashcringle.cringlebosses.CringleBosses.getGson;
 public class CringleBoss extends SlimefunItem {
 
     private List<ItemStack> drops;
-
     private String name;
-
+    private Species species = Species.NORMAL;
     private String magicInternalName;
-
     private String eliteInternalName;
     private EntityType entityType;
+    private bossType type;
+    private boolean isNaturalLevel;
+    private int mobLevel;
 
-    public String getMagicInternalName() {
-        return magicInternalName;
-    }
-
-    public void setMagicInternalName(String magicInternalName) {
-        this.magicInternalName = magicInternalName;
-    }
-
-    public String getEliteInternalName() {
-        return eliteInternalName;
-    }
-
-    public void setEliteInternalName(String eliteInternalName) {
-        this.eliteInternalName = eliteInternalName;
-    }
-
-    public bossType getType() {
-        return type;
-    }
-
-    public void setType(bossType type) {
-        this.type = type;
-    }
-
-    public boolean isNaturalLevel() {
-        return isNaturalLevel;
-    }
-
-    public void setNaturalLevel(boolean naturalLevel) {
-        isNaturalLevel = naturalLevel;
-    }
-
-    public int getMobLevel() {
-        return mobLevel;
-    }
-
-    public void setMobLevel(int mobLevel) {
-        this.mobLevel = mobLevel;
-    }
 
     public enum bossType {
         MAGIC,
         ELITE,
-
         ELITEBOSS,
         VANILLA,
         MAGIC_ELITE,
         MAGIC_ELITEBOSS,
+
     }
 
-    private bossType type;
-
-    private boolean isNaturalLevel;
-    private int mobLevel;
+    public enum Species {
+        ANGEL,
+        DEMON,
+        NORMAL
+    }
+    @Getter
+    private static final String DEMON_ENTITY = "DemonEntity";
+    @Getter
+    private static final String ANGEL_ENTITY = "AngelEntity";
 
 //        Bell bell = new Bell("&bPrimordial Bell", potionEffects, ig, primordialBell, RecipeType.ANCIENT_ALTAR, recipe);
     public CringleBoss(String name, bossType type, EntityType entityType, ItemGroup itemGroup, SlimefunItemStack item, ItemStack[] recipe) {
@@ -124,14 +96,32 @@ public class CringleBoss extends SlimefunItem {
         this.setNaturalLevel(false);
         this.setMobLevel(mobLevel);
     }
-
+    public CringleBoss(String name, bossType type, EntityType entityType, Species species, ItemGroup itemGroup, SlimefunItemStack item, ItemStack[] recipe) {
+        super(itemGroup, item, SummoningAltar.SUMMONING_ALTAR, recipe);
+        this.setName(name);
+        this.setDrops(getDrops());
+        this.setType(type);
+        this.setEntityType(entityType);
+        this.setNaturalLevel(true);
+        this.setSpecies(species);
+    }
+    public CringleBoss(String name, bossType type, Species species, int mobLevel, EntityType entityType, ItemGroup itemGroup, SlimefunItemStack item, ItemStack[] recipe) {
+        super(itemGroup, item, SummoningAltar.SUMMONING_ALTAR, recipe);
+        this.setName(name);
+        this.setDrops(getDrops());
+        this.setType(type);
+        this.setEntityType(entityType);
+        this.setNaturalLevel(false);
+        this.setMobLevel(mobLevel);
+        this.setSpecies(species);
+    }
     public CringleBoss(ItemGroup itemGroup, SlimefunItemStack item, RecipeType recipeType, ItemStack[] recipe) {
         super(itemGroup, item, recipeType, recipe);
     }
 
     public void setUpMob(Location location) {
         this.setMobLevel(isNaturalLevel() ? getNaturalMobLevel(location, PlayerScanner.getNearbyPlayers(location)) : this.getMobLevel());
-        LivingEntity mob;
+        LivingEntity mob = null;
         switch(getType()) {
             case MAGIC_ELITE:
                 mob = (LivingEntity) spawnMagicMob(getMagicInternalName(),location);
@@ -155,10 +145,21 @@ public class CringleBoss extends SlimefunItem {
                 mob = (LivingEntity) location.getWorld().spawnEntity(location, getEntityType());
                 mob.setCustomName(getName());
             break;
-
         }
+        if (mob != null)
+            switch(getSpecies()) {
+                case ANGEL:
+                    tag(mob, ANGEL_ENTITY, mob.getType().toString());
+                    mob.setInvulnerable(true);
+                    break;
+                case DEMON:
+                    tag(mob, DEMON_ENTITY, mob.getType().toString());
+                    break;
+            }
     }
-
+    public static void tag(@NotNull LivingEntity entity, String key, String value) {
+        entity.getPersistentDataContainer().set(new NamespacedKey(MetadataHandler.PLUGIN, key), PersistentDataType.STRING, value);
+    }
     public static Entity spawnMagicMob(String mob, Location targetLocation) {
         MageController controller = CringleBosses.magicAPI.getController();
         Entity spawned = null;
@@ -335,5 +336,52 @@ public class CringleBoss extends SlimefunItem {
 
     public void setEntityType(EntityType entityType) {
         this.entityType = entityType;
+    }
+    public String getMagicInternalName() {
+        return magicInternalName;
+    }
+
+    public void setMagicInternalName(String magicInternalName) {
+        this.magicInternalName = magicInternalName;
+    }
+
+    public String getEliteInternalName() {
+        return eliteInternalName;
+    }
+
+    public void setEliteInternalName(String eliteInternalName) {
+        this.eliteInternalName = eliteInternalName;
+    }
+
+    public bossType getType() {
+        return type;
+    }
+
+    public void setType(bossType type) {
+        this.type = type;
+    }
+
+    public boolean isNaturalLevel() {
+        return isNaturalLevel;
+    }
+
+    public void setNaturalLevel(boolean naturalLevel) {
+        isNaturalLevel = naturalLevel;
+    }
+
+    public int getMobLevel() {
+        return mobLevel;
+    }
+
+    public void setMobLevel(int mobLevel) {
+        this.mobLevel = mobLevel;
+    }
+
+    public Species getSpecies() {
+        return species;
+    }
+
+    public void setSpecies(Species species) {
+        this.species = species;
     }
 }

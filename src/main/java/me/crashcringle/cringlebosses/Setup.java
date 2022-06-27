@@ -52,7 +52,7 @@ public class Setup {
     private Research primeResearch;
     private Research soulResearch;
     private Research chowResearch;
-
+    private Research altarResearch;
     public Setup() {
 
         ItemStack itemGroupItem = new CustomItemStack(Material.SOUL_CAMPFIRE, "&7Bosses", "", "&a> Click to open");
@@ -76,6 +76,7 @@ public class Setup {
         rogueResearch = new Research(new NamespacedKey(CringleBosses.inst(), "Rogue_tier1_research"), 12600006, "Tales long since forgotten", 75);
         corruptResearch = new Research(new NamespacedKey(CringleBosses.inst(), "Corrupt_tier1_research"), 12600007, "The forbidden fruits of knowledge", 75);
         chowResearch = new Research(new NamespacedKey(CringleBosses.inst(), "Chow_research"), 12600008, "Dog Food...", 24);
+        altarResearch = new Research(new NamespacedKey(CringleBosses.inst(), "Altar_research"), 12600009, "The art of conjuration....", 30);
 
 
 
@@ -85,7 +86,7 @@ public class Setup {
                 SlimefunItems.ENDER_LUMP_2,                 SlimefunItems.GOLD_10K,                               SlimefunItems.ENDER_LUMP_2,
                 SlimefunItems.WITHER_PROOF_OBSIDIAN,        SlimefunItems.GOLD_10K,                               SlimefunItems.WITHER_PROOF_OBSIDIAN };
 
-        SummoningAltar altar = new SummoningAltar(chaosItemGroup, SUMMONING_ALTAR, RecipeType.MAGIC_WORKBENCH, altarRecipe);
+        SummoningAltar altar = new SummoningAltar(resourcesItemGroup, SUMMONING_ALTAR, RecipeType.MAGIC_WORKBENCH, altarRecipe);
         altar.register(CringleBosses.inst());
 
         ItemStack[] pedestalRecipe = {
@@ -97,6 +98,9 @@ public class Setup {
         pedestal.register(CringleBosses.inst());
         new SummoningAltarListener(CringleBosses.inst(), altar, pedestal);
 
+        altarResearch.addItems(altar, pedestal);
+        altarResearch.register();
+
         Hounds.setup(CringleBosses.inst(), resourcesItemGroup, chowResearch);
         Souls.setup(CringleBosses.inst(), resourcesItemGroup, soulResearch);
         Chaos.setup(CringleBosses.inst(), chaosItemGroup, chaosResearch);
@@ -105,6 +109,8 @@ public class Setup {
         Corrupt.setup(CringleBosses.inst(), corruptItemGroup, corruptResearch);
         Old.setup(CringleBosses.inst(), oldItemGroup, oldResearch);
         Rogue.setup(CringleBosses.inst(), rogueItemGroup, rogueResearch);
+        new CringleEntityListener(CringleBosses.inst());
+
 
     }
 }
